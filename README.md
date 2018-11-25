@@ -2,6 +2,8 @@
 Code accompanying "Size, shape and structure of insect wings" by M. Salcedo, J. Hoffmann, S. Donoughe, and L. Mahadevan.
 ## File formats
 Folders have segmented wing images.  Note, some folders, such as *plecoptera* are rather large when unzipped (~800 MB).
+More data can be found at:
+https://github.com/hoffmannjordan/insect-wing-venation-patterns
 
 ## Segmentation Code
 The python scripts. There are a few similar repositories that have similar code.
