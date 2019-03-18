@@ -1,3 +1,8 @@
+# Code from https://github.com/hoffmannjordan/size-and-shape-of-insect-wings
+# A version of this code is available at: https://github.com/hoffmannjordan/insect-wing-venation-patterns
+# The main image segmentation code can be found at: https://github.com/hoffmannjordan/Fast-Marching-Image-Segmentation
+
+
 import h5py
 import skfmm
 import time
@@ -137,22 +142,7 @@ def segmentation3(filename,cx,cy,dx,dy,dz,times,m):
 			#exit()
 	np.savetxt('./'+filename+'_FMM_seg2.csv',tmp.astype(int), fmt='%i',delimiter=',')
 
-	# 		#exit()
-	# 	iterator += 1
-	# 	t+=dt
-	# 	print t,tmax
-	# np.savetxt('./segmented_slice_42.txt',tmp)
 
-
-# def read_in_centroids(i):
-# 	cx = []
-# 	cy = []
-# 	with open('../data/ch2_ims/centroids_updated_'+str(i)+'.txt') as f:
-# 		for line in f:
-# 			data = line.split()
-# 			cy.append(int(data[0].split('{')[1].split(',')[0])-1)
-# 			cx.append(int(data[1].split('}')[0])-1)
-# 	return cx,cy
 
 def read_in_centroids(filename):
 	cx = []
@@ -168,6 +158,11 @@ def read_in_centroids(filename):
 	
 					
 if __name__=='__main__':
+	'''
+	Segment all of the images that are provided in the directory in question.
+	In this example, only one image is used. In general, glob can be effectively used here.
+	'''
+	#use MPI to parallelize of many files
 	comm = MPI.COMM_WORLD
 	size = comm.Get_size()
 	rank = comm.Get_rank()	
@@ -179,6 +174,7 @@ if __name__=='__main__':
 	start =  rank*delta
 	stop = start +delta #+ 1
 	if stop > ll:
+		#ensure the last file is properly captured.
 		stop=ll
 	local_list = file_list[start:stop]
 	print local_list
@@ -198,32 +194,24 @@ if __name__=='__main__':
 		plt.xlim([0,b])
 		plt.ylim([0,a])
 		plt.show()
-		plt.savefig('./222.png', dpi=300,bbox_inches='tight')
+		plt.savefig('./tmp1.png', dpi=300,bbox_inches='tight')
 		plt.clf()
 		fmm = np.ones((a, b))
+		# Initialize level sets by setting the c coordinates to -1.
 		for i in xrange(len(cx)):
 			x1 = int(cx[i])
 			y1 = int(cy[i])
 			fmm[y1][x1] = -1
-		print np.sum(fmm)
-		#exit()
-		#fmm=np.transpose(fmm)
 		dist_mat = skfmm.distance(fmm)
+		# Add a small value to ensure speed is never equal to 0.0
 		speed=np.genfromtxt('./'+filename+'_vel2.csv',delimiter=',')+0.0025
 		speed=scipy.ndimage.filters.gaussian_filter(speed,2.35)
 		slice3 = read_in_frame(filetodo)
-		print np.shape(slice3)
 		dim1,dim2 = np.shape(slice3)
-		# for m in xrange(dim1):
-		# 	for n in xrange(dim2):
-		# 		if slice3[m][n] == 0.0:
-		# 			speed[m][n] = 1.0
-		print np.amax(speed)
-		print np.amin(speed)
 		plt.imshow(speed,cmap='hot')
 		plt.title('speed')
 		plt.show()
-		plt.savefig('./2222.png', dpi=300,bbox_inches='tight')
+		plt.savefig('./tmp2.png', dpi=300,bbox_inches='tight')
 		plt.clf()
 		t = skfmm.travel_time(fmm, speed)
 		plt.imshow(t,cmap='hot')
@@ -233,7 +221,7 @@ if __name__=='__main__':
 		plt.xlim([0,b])
 		plt.ylim([0,a])
 		plt.show()
-		plt.savefig('./22222.png', dpi=300,bbox_inches='tight')
+		plt.savefig('./tmp3.png', dpi=300,bbox_inches='tight')
 		plt.clf()
 		print len(cx)
 		print len(cy)

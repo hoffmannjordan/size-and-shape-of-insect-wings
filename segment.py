@@ -1,3 +1,7 @@
+# Code from https://github.com/hoffmannjordan/size-and-shape-of-insect-wings
+# A version of this code is available at: https://github.com/hoffmannjordan/insect-wing-venation-patterns
+# The main image segmentation code can be found at: https://github.com/hoffmannjordan/Fast-Marching-Image-Segmentation
+
 import numpy as np
 import matplotlib
 #matplotlib.use('Agg')
@@ -15,6 +19,7 @@ import time
 import glob
 
 def rgb2gray(rgb):
+	# convert from rgb to grayscale
 	r, g, b  = rgb[:,:,0], rgb[:,:,1], rgb[:,:,2]
 	gray = 0.2989 * r + 0.5870 * g + 0.1140 * b
 	return gray
@@ -38,8 +43,8 @@ def import_data(name,cutoff):
 		for j in xrange(dim2):
 			if data[i][j] > cutoff:
 				tmp[i][j] = 1.0
-	plt.imshow(tmp)
-	plt.show()
+	# plt.imshow(tmp)
+	# plt.show()
 	return tmp
 
 
@@ -57,11 +62,17 @@ def connected_comp(spec , matrix):
 	plt.show()
 	plt.imshow(dup,cmap='nipy_spectral',interpolation='none')
 	plt.title(spec)
-	plt.savefig('./22'+spec+'.png', dpi=300,bbox_inches='tight')
+	plt.savefig('./Segmented_Domains_'+spec+'.png', dpi=300,bbox_inches='tight')
 	plt.clf()
 	return dup
 
 def by_size(mat,thresh):
+	'''
+	Generate the segmented domains ensuring that they are above a minimum size
+	If the region is over a certain size (dx dy) then populate the region with random points
+	this is to ensure that the background is properly segmented and that domains on the bounary
+	of the wing are properly captured.
+	'''
 	maxv = np.amax(mat)
 	locs = [[] for i in xrange(int(maxv))]
 	dim1,dim2 = np.shape(mat)

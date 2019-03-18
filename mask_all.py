@@ -1,3 +1,7 @@
+# Code from https://github.com/hoffmannjordan/size-and-shape-of-insect-wings
+# A version of this code is available at: https://github.com/hoffmannjordan/insect-wing-venation-patterns
+# The main image segmentation code can be found at: https://github.com/hoffmannjordan/Fast-Marching-Image-Segmentation
+
 import numpy as np
 import matplotlib
 #matplotlib.use('Agg')
@@ -16,12 +20,20 @@ import glob
 import os
 
 def rgb2gray(rgb):
+	'''
+	Function to convert images from RGB to grayscale
+	'''
 	r, g, b = rgb[:,:,0], rgb[:,:,1], rgb[:,:,2]
 	gray = 0.2989 * r + 0.5870 * g + 0.1140 * b
 	return gray
 
 	
 def import_data(name,cutoff):
+	'''
+	Function to import a file based on the name and then binarize it based on the cutoff variable.
+	Input: file path and cutoff
+	Output: binarized matrix of images
+	'''
 	im = Image.open(name)
 	imarray = np.array(im)
 	print np.shape(imarray)
@@ -44,6 +56,9 @@ def import_data(name,cutoff):
 	return tmp
 
 def import_data2(orig):
+	'''
+	Second function to import a file based on the name and then binarize it based on the cutoff variable.
+	'''
 	im = Image.open(orig)
 	imarray = np.array(im)
 	#imarray = rgb2gray(imarray)
@@ -78,6 +93,9 @@ def import_data2(orig):
 	return tmp #imarray
 
 def breadth_search(start_positionx, start_positiony):
+	'''
+	Perform a BFS to remove improperly removed data.
+	'''
 	a,b = np.shape(tmp)
 	checked = {}
 	to_check = []
@@ -111,9 +129,9 @@ def breadth_search(start_positionx, start_positiony):
 	return tmp2
 
 def refine_mask(data, mask):
-	'''plt.imshow(data,cmap='nipy_spectral',interpolation='none')
-	plt.title('original data')
-	plt.show()'''
+	'''
+	Do the refinement of the mask.
+	'''
 	mask2 = np.copy(mask)
 	#not the most efficient way
 	xs,ys = np.where(mask == 0)
@@ -140,6 +158,9 @@ def refine_mask(data, mask):
 	return mask2
 
 if __name__=='__main__':
+	'''
+	Import all segmented files and refine them as needed. 
+	'''
 	file_list_seg = glob.glob("./*_FMM_seg2.csv")
 	#file_list_orig = glob.glob("./*.tiff")
 
