@@ -9,9 +9,14 @@ More data can be found at:
 https://github.com/hoffmannjordan/insect-wing-venation-patterns
 
 ## Segmentation Code
-The python scripts. There are a few similar repositories that have similar code.
+The python scripts. There are a few similar repositories that have similar code. For example, for segmentation a 
+more comprehensive code exists at: https://github.com/hoffmannjordan/Fast-Marching-Image-Segmentation
+and for some wing statistics, code can be found at https://github.com/hoffmannjordan/insect-wing-venation-patterns.
+All code provided has been tested in python 2.7. Python 3 should be a very minor port, mainly reformatting some print
+statements.
 
 ## Analysis Code
-There is a _Mathematica_ notebook that will do the analysis of the segmented files.
+There is a _Mathematica_ notebook that will do the analysis of the segmented files. The _Mathematica_ code always uses
+a segmented csv file.
 
 ## Article Description

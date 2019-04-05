@@ -172,7 +172,7 @@ if __name__=='__main__':
 		orig_data_scan = np.asarray(orig_data_scan)
 		orig_data_scan = orig_data_scan.astype(int)
 
-		grayscale_data_scan = import_data('./lw.png',0.03)
+		grayscale_data_scan = import_data('./lace_wing.png',0.03)
 		#grayscale_data_scan = import_data2('./LIBELLULIDAE-erythemis-simplicicollis-RF.tiff')
 		#tmp = create_tmp_mask(orig_data_real)
 		tmp = grayscale_data_scan
@@ -189,5 +189,5 @@ if __name__=='__main__':
 		plt.title('final')
 		plt.show()'''
 
-		np.savetxt('./LWw.csv', new_file.astype(int), fmt='%i', delimiter=',')
+		np.savetxt('./Lace_Wing_Seg.csv', new_file.astype(int), fmt='%i', delimiter=',')
 		#os.remove(filetodo)
