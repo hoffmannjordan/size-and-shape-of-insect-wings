@@ -23,17 +23,17 @@ a segmented csv file.
 Insect wings are incredibly diverse in their complexity, vary greatly in size, and also greatly in function. 
 In this work, we perform a comprehensive analysis of wings of many shapes and sizes where we have removed all aspects
 of scale and focus entirely on geometric arrangements.
-![phylo](./images/phylo.png)
+![phylo](./Images/phylo.png)
 Along with our code, we also release all of our data to facilitate future analysis. We perform a suite of geometric analyses, detailed in the figure below. We study geometric aspects of the wing in a heirachical fashion, focusing on the contour of the wing, on the internal veination of the wing, and the shape of domains in an insect wing,
-![methods](./images/methods.png)
+![methods](./Images/methods.png)
 For each wing, we can compute various properties of the exterior and interior of the wing. We compute the absolute 
 value of curvature moving in a clockwise direction around the wing. We also looked at how the amount of veination
 on the perimiter of the wing compares to the amount of internal veination. We renormalize these axis so that we can
 ask how the shape of the wing compares to how dense its internal veination is.
-![perim](./images/perim.png)
+![perim](./Images/perim.png)
 Next, we looked at the P--D curves, as described in Hoffmann _et. al._ PNAS (2018). Sweeping across the P-D axis of a wing, we compute the mean size and circularity of the domains in a thin rectangular slice. We plot this trajectory 
 as it highlights how domains vary spatially along the long axis of the wing.
-![curves](./images/curves.png)
+![curves](./Images/curves.png)
 We employ a suite of network analysis tools on our veination pattern. Future work may explore further in relationship 
 between the detected clusters and biological properties.
-![network](./images/network.png)
+![network](./Images/network.png)
